@@ -89,7 +89,7 @@ class MethodChannelIminPrinter extends IminPrinterPlatform {
 
   @override
   Future<void> setTextStyle(IminFontStyle style) async {
-    logger.d('setTextStyle', style.index);
+    logger.d('setTextStyle', error: style.index);
     Map<String, dynamic> arguments = <String, dynamic>{
       "style": style.index,
     };
@@ -713,7 +713,7 @@ class MethodChannelIminPrinter extends IminPrinterPlatform {
       }
 
       if (style.lineHeight != null) {
-        logger.d('lineHeight', style.lineHeight);
+        logger.d('lineHeight', error: style.lineHeight);
         await setTextBitmapLineSpacing(style.lineHeight!);
       }
 
