@@ -56,7 +56,7 @@ public class Utils {
             }
         } else {
             model = getSystemProperties("sys.neostra_oem_id");
-            // android.util.Log.d(TAG, "model " + model);
+            // android.util.//Log.d(TAG, "model " + model);
             if (!TextUtils.isEmpty(model) && model.length() > 4) {
                 model = filterModel(model.substring(0, 5));
                 String oemId = getSystemProperties("sys.neostra_oem_id");
@@ -235,7 +235,7 @@ public class Utils {
             Method getter = clazz.getDeclaredMethod("get", String.class);
             value = (String) getter.invoke(null, property);
         } catch (Exception e) {
-            Log.d(TAG, "Unable to read system properties");
+            //Log.d(TAG, "Unable to read system properties");
         }
         return value;
     }
@@ -257,7 +257,7 @@ public class Utils {
             out = exeEcho.getOutputStream();
             out.write(cmd.getBytes());
             out.flush();
-            Log.d("iminLib", " " + cmd);
+            //Log.d("iminLib", " " + cmd);
             /*if(model.equals("Swan 1") || model.equals("DS1-11")){
                 Thread.sleep(500);
                 String cmd2 = "echo cash_en:1 > /sys/devices/platform/gpio_ctrl/switch_gpio " + "\n";
@@ -266,14 +266,14 @@ public class Utils {
             }*/
         } catch (Exception e) {
             //e.printStackTrace();
-            Log.d("iminLib", "cmdGpioPwrOn faild :" + e.getMessage());
+            //Log.d("iminLib", "cmdGpioPwrOn faild :" + e.getMessage());
         } finally {
             if (out != null) {
                 try {
                     out.close();
                 } catch (Exception e) {
                     //e.printStackTrace();
-                    Log.d("iminLib", "close stream faild :" + e.getMessage());
+                    //Log.d("iminLib", "close stream faild :" + e.getMessage());
                 }
             }
         }
