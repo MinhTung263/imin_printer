@@ -89,7 +89,7 @@ class MethodChannelIminPrinter extends IminPrinterPlatform {
 
   @override
   Future<void> setTextStyle(IminFontStyle style) async {
-    logger.d('setTextStyle', style.index);
+    logger.d('setTextStyle');
     Map<String, dynamic> arguments = <String, dynamic>{
       "style": style.index,
     };
@@ -378,7 +378,8 @@ class MethodChannelIminPrinter extends IminPrinterPlatform {
     }
     arguments.putIfAbsent("bitmap", () => img);
     if (img is Uint8List) {
-      await methodChannel.invokeMethod<void>('printSingleBitmapWithTranslation', arguments);
+      await methodChannel.invokeMethod<void>(
+          'printSingleBitmapWithTranslation', arguments);
     } else {
       await methodChannel.invokeMethod<void>('printBitmapToUrl', arguments);
     }
@@ -735,7 +736,7 @@ class MethodChannelIminPrinter extends IminPrinterPlatform {
       }
 
       if (style.lineHeight != null) {
-        logger.d('lineHeight', style.lineHeight);
+        logger.d('lineHeight');
         await setTextBitmapLineSpacing(style.lineHeight!);
       }
 
@@ -888,27 +889,30 @@ class MethodChannelIminPrinter extends IminPrinterPlatform {
   }
 
   @override
-  Future<void> labelAddText(String text, {LabelTextStyle? labelTextStyle}) async {
+  Future<void> labelAddText(String text,
+      {LabelTextStyle? labelTextStyle}) async {
     Map<String, dynamic> arguments = <String, dynamic>{
-      "text":text,
+      "text": text,
       "labelTexStyle": labelTextStyle?.toMap(),
     };
     await methodChannel.invokeMethod<void>('labelAddText', arguments);
   }
 
   @override
-  Future<void> labelAddBarCode(String barCode, {LabelBarCodeStyle? barCodeStyle}) async {
+  Future<void> labelAddBarCode(String barCode,
+      {LabelBarCodeStyle? barCodeStyle}) async {
     Map<String, dynamic> arguments = <String, dynamic>{
-      "barCode":barCode,
+      "barCode": barCode,
       "barCodeStyle": barCodeStyle?.toMap(),
     };
     await methodChannel.invokeMethod<void>('labelAddBarCode', arguments);
   }
 
   @override
-  Future<void> labelAddQrCode(String qrCode, {LabelQrCodeStyle? qrCodeStyle}) async {
+  Future<void> labelAddQrCode(String qrCode,
+      {LabelQrCodeStyle? qrCodeStyle}) async {
     Map<String, dynamic> arguments = <String, dynamic>{
-      "qrCode":qrCode,
+      "qrCode": qrCode,
       "qrCodeStyle": qrCodeStyle?.toMap(),
     };
     await methodChannel.invokeMethod<void>('labelAddQrCode', arguments);
@@ -923,13 +927,14 @@ class MethodChannelIminPrinter extends IminPrinterPlatform {
   }
 
   @override
-  Future<void> labelAddBitmap(dynamic img,{LabelBitmapStyle? addBitmapStyle}) async {
+  Future<void> labelAddBitmap(dynamic img,
+      {LabelBitmapStyle? addBitmapStyle}) async {
     Map<String, dynamic> arguments = <String, dynamic>{
       "addBitmapStyle": addBitmapStyle?.toMap(),
     };
     if (img is Uint8List) {
       arguments.putIfAbsent("bitmap", () => img);
-    }else{
+    } else {
       arguments.putIfAbsent("bitmapUrl", () => img);
     }
 
@@ -938,31 +943,36 @@ class MethodChannelIminPrinter extends IminPrinterPlatform {
 
   @override
   Future<void> labelPrintCanvas(int printCount) async {
-    Map<String, dynamic> arguments = <String, dynamic>{"printCount": printCount};
+    Map<String, dynamic> arguments = <String, dynamic>{
+      "printCount": printCount
+    };
     await methodChannel.invokeMethod<void>('labelPrintCanvas', arguments);
   }
 
   @override
-  Future<void> printLabelBitmap(dynamic img,{LabelPrintBitmapStyle? printBitmapStyle}) async {
+  Future<void> printLabelBitmap(dynamic img,
+      {LabelPrintBitmapStyle? printBitmapStyle}) async {
     Map<String, dynamic> arguments = <String, dynamic>{
       "printBitmapStyle": printBitmapStyle?.toMap(),
     };
     if (img is Uint8List) {
       arguments.putIfAbsent("bitmap", () => img);
-    }else{
+    } else {
       arguments.putIfAbsent("bitmapUrl", () => img);
     }
     await methodChannel.invokeMethod<void>('printLabelBitmap', arguments);
   }
 
   @override
-  Future<void> labelLearning() async{
+  Future<void> labelLearning() async {
     await methodChannel.invokeMethod<void>('labelLearning');
   }
 
   @override
   Future<void> setPrintModel(int printModel) async {
-    Map<String, dynamic> arguments = <String, dynamic>{"printModel": printModel};
+    Map<String, dynamic> arguments = <String, dynamic>{
+      "printModel": printModel
+    };
     await methodChannel.invokeMethod<void>('setPrintModel', arguments);
   }
 
@@ -972,6 +982,4 @@ class MethodChannelIminPrinter extends IminPrinterPlatform {
   //       .invokeMethod<String>('getPrintModel');
   //
   // }
-
-
 }

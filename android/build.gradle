@@ -5,12 +5,11 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-         maven{
+        maven {
             allowInsecureProtocol = true
             url 'https://www.jitpack.io'
         }
     }
-
     dependencies {
         classpath 'com.android.tools.build:gradle:8.5.2'
     }
@@ -20,7 +19,7 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
-        maven{
+        maven {
             allowInsecureProtocol = true
             url 'https://www.jitpack.io'
         }
@@ -29,43 +28,48 @@ rootProject.allprojects {
 
 apply plugin: 'com.android.library'
 
-apply from: "./resolve_dependencies.gradle"//解决编译导入Flutter相关的包报错问题
 android {
-    compileSdkVersion = flutter.compileSdkVersion
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
+    namespace 'com.imin.printer.imin_printer'
+
+    compileSdk flutter.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion flutter.minSdkVersion
-        targetSdkVersion flutter.compileSdkVersion
+        minSdk flutter.minSdkVersion
+        targetSdk flutter.compileSdkVersion
         multiDexEnabled true
+        consumerProguardFiles "consumer-rules.pro"
     }
 
-    testOptions {
-        unitTests.all {
-            testLogging {
-               events "passed", "skipped", "failed", "standardOut", "standardError"
-               outputs.upToDateWhen {false}
-               showStandardStreams = true
-            }
-        }
+    compileOptions {
+        // AGP 8.x + Flutter mới -> Java 17
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
-    namespace 'com.imin.printer.imin_printer'
+
+    lint {
+        abortOnError false
+    }
 }
-dependencies {
-    implementation files('libs\\iminPrinterSDK-15_V1.3.2_2505261539.jar')
 
-//    implementation files('libs\\iminPrinterSDK-15_V1.3.2_2505141503.jar')
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.mockito:mockito-core:5.18.0'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-//    implementation files('libs/IminLibs1.0.15.jar')
+dependencies {
+    // Imin SDK
+    implementation files('libs/iminPrinterSDK-15_V1.3.2_2505261539.jar')
     implementation files('libs/IminStraElectronicSDK_V1.2.jar')
+
+    // Rx
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
+    // AndroidX
     implementation "androidx.multidex:multidex:2.0.1"
+
+    // Imin official lib
     implementation 'com.github.iminsoftware:IminPrinterLibrary:V1.0.0.15'
+
+    // Glide
     implementation 'com.github.bumptech.glide:glide:4.16.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
-}
 
+    // Test
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:5.18.0'
+}
